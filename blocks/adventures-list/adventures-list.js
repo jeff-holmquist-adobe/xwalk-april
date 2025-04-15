@@ -2,13 +2,15 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 async function fetchAdventures() {
   try {
-    const response = await fetch('https://author-p82652-e1522149.adobeaemcloud.com/graphql/execute.json/wknd-shared/adventures-all');
+    const response = await fetch('https://publish-p82652-e1522149.adobeaemcloud.com/graphql/execute.json/wknd-shared/adventures-all');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     return data.data.adventureList.items;
   } catch (error) {
+    // Log error but don't break the UI
+    // eslint-disable-next-line no-console
     console.error('Error fetching adventures:', error);
     return [];
   }
@@ -18,7 +20,7 @@ function createAdventureCard(adventure) {
   const card = document.createElement('div');
   card.className = 'adventure-card';
 
-  const picture = createOptimizedPicture(adventure.primaryImage._path, adventure.title, false, [
+  const picture = createOptimizedPicture(adventure.primaryImage.path, adventure.title, false, [
     { media: '(min-width: 600px)', width: '400' },
     { width: '200' },
   ]);
@@ -52,4 +54,4 @@ export default async function decorate(block) {
 
   block.textContent = '';
   block.appendChild(container);
-} 
+}
