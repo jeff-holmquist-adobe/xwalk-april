@@ -1,5 +1,3 @@
-// import { createOptimizedPicture } from '../../scripts/aem.js';
-
 const AEM_PUBLISH_URL = 'https://publish-p82652-e1522149.adobeaemcloud.com';
 
 async function fetchAdventures() {
@@ -10,7 +8,9 @@ async function fetchAdventures() {
     }
     const data = await response.json();
     // eslint-disable-next-line no-console
-    console.log('GraphQL Response:', data);
+    console.log('First adventure properties:', Object.keys(data.data.adventureList.items[0]));
+    // eslint-disable-next-line no-console
+    console.log('First adventure:', JSON.stringify(data.data.adventureList.items[0], null, 2));
     return data.data.adventureList.items;
   } catch (error) {
     // Log error but don't break the UI
@@ -21,39 +21,40 @@ async function fetchAdventures() {
 }
 
 function createAdventureCard(adventure) {
-  // Create the anchor element
+  // Create the link wrapper
   const link = document.createElement('a');
-  link.href = `/content/xwalk-april/index/examples/adventure?data=${encodeURIComponent(JSON.stringify(adventure))}`;
-  link.className = 'adventure-link';
+  // Extract just the slug from the full path
+  // eslint-disable-next-line no-underscore-dangle
+  const pathParts = adventure._path.split('/adventures/')[1].split('/');
+  const slug = pathParts[0];
+  link.href = `/content/xwalk-april/examples/adventure?adventure=${slug}`;
+  link.className = 'adventure-card-link';
 
   const card = document.createElement('div');
   card.className = 'adventure-card';
 
-  // Use the dynamic URL for optimized images
-  const imageUrl = adventure.primaryImage.dynamicUrl || adventure.primaryImage.path;
-  const fullImageUrl = imageUrl.startsWith('http')
-    ? imageUrl
-    : `${AEM_PUBLISH_URL}${imageUrl}`;
+  // Create a full URL using the dynamic URL from AEM
+  // eslint-disable-next-line no-underscore-dangle
+  const fullImageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
 
-  // Create picture element manually
+  // Create the picture element manually since createOptimizedPicture is causing issues
   const picture = document.createElement('picture');
 
   // Create source elements for different breakpoints
   const sourceLarge = document.createElement('source');
-  sourceLarge.setAttribute('media', '(min-width: 600px)');
-  sourceLarge.setAttribute('srcset', `${fullImageUrl}?width=400&format=webply&optimize=medium`);
-  sourceLarge.setAttribute('type', 'image/webp');
+  sourceLarge.media = '(min-width: 600px)';
+  sourceLarge.srcset = `${fullImageUrl}&width=400`;
 
   const sourceSmall = document.createElement('source');
-  sourceSmall.setAttribute('srcset', `${fullImageUrl}?width=200&format=webply&optimize=medium`);
-  sourceSmall.setAttribute('type', 'image/webp');
+  sourceSmall.srcset = `${fullImageUrl}&width=200`;
 
-  // Create fallback img element
+  // Create the img element
   const img = document.createElement('img');
-  img.setAttribute('loading', 'lazy');
-  img.setAttribute('alt', adventure.title);
-  img.setAttribute('src', `${fullImageUrl}?width=200&format=jpeg&optimize=medium`);
+  img.loading = 'lazy';
+  img.alt = adventure.title;
+  img.src = `${fullImageUrl}&width=400`;
 
+  // Assemble the picture element
   picture.appendChild(sourceLarge);
   picture.appendChild(sourceSmall);
   picture.appendChild(img);
@@ -72,9 +73,8 @@ function createAdventureCard(adventure) {
   card.appendChild(picture);
   card.appendChild(content);
 
-  // Add the card to the link
+  // Wrap the card in the link
   link.appendChild(card);
-
   return link;
 }
 
