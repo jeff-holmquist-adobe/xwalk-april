@@ -154,6 +154,10 @@
     ]
   },
   {
+    "id": "adventures-list",
+    "fields": []
+  },
+  {
     "id": "card",
     "fields": [
       {
