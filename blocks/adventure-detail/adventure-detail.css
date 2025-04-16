@@ -1,0 +1,55 @@
+.adventure-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.adventure-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.adventure-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.activity-type {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.adventure-image {
+  margin-bottom: 2rem;
+}
+
+.adventure-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adventure-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.trip-length,
+.difficulty,
+.price {
+  font-size: 1.2rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.price {
+  font-weight: bold;
+  color: #2e7d32;
+} 

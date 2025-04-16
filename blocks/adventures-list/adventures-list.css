@@ -5,23 +5,30 @@
   padding: 2rem;
 }
 
+.adventure-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.adventure-link:hover {
+  transform: translateY(-5px);
+}
+
 .adventure-card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
+  background: white;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-  transition: transform 0.3s ease;
-}
-
-.adventure-card:hover {
-  transform: translateY(-5px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .adventure-card picture {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16/9;
   overflow: hidden;
 }
 
@@ -33,12 +40,14 @@
 
 .adventure-content {
   padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .adventure-content h3 {
   margin: 0 0 1rem;
   font-size: 1.25rem;
-  color: #333;
 }
 
 .adventure-content p {

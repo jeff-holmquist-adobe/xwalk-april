@@ -142,6 +142,54 @@
     ]
   },
   {
+    "id": "adventure-detail",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "activityType",
+        "label": "Activity Type",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "primaryImage",
+        "label": "Primary Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "tripLength",
+        "label": "Trip Length",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "difficulty",
+        "label": "Difficulty",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "price",
+        "label": "Price",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
