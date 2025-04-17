@@ -2,22 +2,6 @@ sitemaps:
   default:
     source: /query-index.json
     destination: /sitemap.xml
-    origin: https://main--xwalk-april--jeff-holmquist-adobe.aem.page
     lastmod: YYYY-MM-DD
     changefreq: weekly
-    priority: 0.5
-    urlset:
-      - source: /query-index.json
-        condition: ${path} === '/'
-        properties:
-          loc: ${origin}${path}
-          lastmod: ${lastModified}
-          changefreq: daily
-          priority: 1.0
-      - source: /query-index.json
-        condition: ${path}.startsWith('/adventures/') && !${path}.endsWith('/adventure')
-        properties:
-          loc: ${origin}${path}
-          lastmod: ${lastModified}
-          changefreq: weekly
-          priority: 0.8
+    priority: 0.8

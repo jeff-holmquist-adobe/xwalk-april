@@ -9,27 +9,22 @@ indices:
       - '/**.json'
       - '/footer'
       - '/nav'
-      - '/index'
       - '/index/**'
       - '/adventures/adventure'
       - '/adventures/adventure.html'
       - '/adventures/adventure.md'
+      - '/sitemap.xml'
+      - '/404.html'
     target: /query-index.json
     properties:
+      title:
+        select: head > title
+        value: text(el)
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
       robots:
         select: head > meta[name="robots"]
-        value: attribute(el, "content")
-      path:
-        select: none
-        value: path
-      title:
-        select: head > title
-        value: text(el)
-      description:
-        select: head > meta[name="description"]
         value: attribute(el, "content")
 
 routes:
