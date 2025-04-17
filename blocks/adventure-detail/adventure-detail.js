@@ -22,6 +22,7 @@ async function fetchAdventureBySlug(slug) {
 
     return data.data.adventureBySlug || data.data.adventureList?.items?.[0];
   } catch (error) {
+    console.error('Error fetching adventure:', error);
     return null;
   }
 }

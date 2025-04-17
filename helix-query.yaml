@@ -14,3 +14,9 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+
+routes:
+  - path: /adventures/*
+    template: adventures/adventure
+    resolve: false
+    contentBusId: adventures/adventure
