@@ -27,7 +27,7 @@ function createAdventureCard(adventure) {
   // eslint-disable-next-line no-underscore-dangle
   const pathParts = adventure._path.split('/adventures/')[1].split('/');
   const slug = pathParts[0];
-  link.href = `/content/xwalk-april/examples/adventure?adventure=${slug}`;
+  link.href = `/adventures/${slug}`;
   link.className = 'adventure-card-link';
 
   const card = document.createElement('div');

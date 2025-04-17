@@ -108,8 +108,9 @@ function createAdventureDetail(adventure) {
 }
 
 export default async function decorate(block) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const slug = urlParams.get('slug') || urlParams.get('adventure') || urlParams.get('path');
+  const path = window.location.pathname;
+  const match = path.match(/\/adventures\/([^/]+)/);
+  const slug = match ? match[1] : null;
 
   if (!slug) {
     return;
