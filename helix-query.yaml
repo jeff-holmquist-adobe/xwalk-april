@@ -3,9 +3,17 @@ version: 1
 indices:
   pages:
     include:
-      - '/**'
+      - '/'
+      - '/adventures/*'
     exclude:
       - '/**.json'
+      - '/footer'
+      - '/nav'
+      - '/index'
+      - '/index/**'
+      - '/adventures/adventure'
+      - '/adventures/adventure.html'
+      - '/adventures/adventure.md'
     target: /query-index.json
     properties:
       lastModified:
@@ -13,6 +21,15 @@ indices:
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
       robots:
         select: head > meta[name="robots"]
+        value: attribute(el, "content")
+      path:
+        select: none
+        value: path
+      title:
+        select: head > title
+        value: text(el)
+      description:
+        select: head > meta[name="description"]
         value: attribute(el, "content")
 
 routes:
