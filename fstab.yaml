@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p82652-e1522149.adobeaemcloud.com/bin/franklin.delivery/jeff-holmquist-adobe/xwalk-april/main"
+    url: "https://author-p82652-e710588.adobeaemcloud.com/bin/franklin.delivery/jeff-holmquist-adobe/xwalk-april/main"
     type: "markup"
     suffix: ".html"

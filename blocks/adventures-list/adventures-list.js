@@ -1,4 +1,4 @@
-const AEM_PUBLISH_URL = 'https://publish-p82652-e1522149.adobeaemcloud.com';
+const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
 
 async function fetchAdventures() {
   try {
