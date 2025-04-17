@@ -112,7 +112,7 @@
   color: var(--heading-color);
 }
 
-@media (min-width: 900px) {
+@media (width >= 900px) {
   .adventure-detail {
     padding: 0;
   }
@@ -139,7 +139,7 @@
 
   .adventure-header .activity {
     font-size: 2rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgb(255 255 255 / 90%);
     text-shadow: 
       0 2px 6px rgb(0 0 0 / 60%),
       0 1px 3px rgb(0 0 0 / 80%);
@@ -176,6 +176,12 @@
   .detail-item strong {
     font-size: 1.125rem;
     margin-bottom: 0.375rem;
+  }
+}
+
+@media (width >= 1200px) {
+  .adventure-image {
+    height: 90vh;
   }
 }
 
