@@ -51,15 +51,17 @@ function createAdventureCard(adventure) {
   // Add Universal Editor instrumentation
   // eslint-disable-next-line no-underscore-dangle
   card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/jcr:content/data/master`);
-  card.setAttribute('data-aue-type', 'container');
-  card.setAttribute('data-aue-label', 'Adventure Card');
+  card.setAttribute('data-aue-type', 'reference');
+  card.setAttribute('data-aue-filter', 'cf');
+  // eslint-disable-next-line no-underscore-dangle
+  card.setAttribute('data-aue-label', `Content Fragment ${adventure._path}`);
 
   // eslint-disable-next-line no-underscore-dangle
   const fullImageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
 
   const picture = document.createElement('picture');
-  picture.setAttribute('data-aue-type', 'media');
   picture.setAttribute('data-aue-prop', 'primaryImage');
+  picture.setAttribute('data-aue-type', 'media');
   picture.setAttribute('data-aue-label', 'Adventure Image');
 
   const sourceLarge = document.createElement('source');
@@ -83,14 +85,14 @@ function createAdventureCard(adventure) {
 
   const title = document.createElement('h3');
   title.textContent = adventure.title;
-  title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-prop', 'title');
+  title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-label', 'Adventure Title');
 
   const description = document.createElement('p');
   description.textContent = adventure.description;
-  description.setAttribute('data-aue-type', 'richtext');
   description.setAttribute('data-aue-prop', 'description');
+  description.setAttribute('data-aue-type', 'text');
   description.setAttribute('data-aue-label', 'Adventure Description');
 
   content.appendChild(title);
