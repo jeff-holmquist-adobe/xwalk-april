@@ -50,20 +50,18 @@ function createAdventureCard(adventure) {
   card.className = 'adventure-card';
   // Add Universal Editor instrumentation
   // eslint-disable-next-line no-underscore-dangle
-  card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
+  card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
   card.setAttribute('data-aue-type', 'reference');
   card.setAttribute('data-aue-label', 'Adventure Card');
-  card.setAttribute('data-aue-variation', 'master');
 
   // eslint-disable-next-line no-underscore-dangle
   const fullImageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
 
   const picture = document.createElement('picture');
   // eslint-disable-next-line no-underscore-dangle
-  picture.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}`);
+  picture.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}/master`);
   picture.setAttribute('data-aue-type', 'reference');
   picture.setAttribute('data-aue-label', 'Adventure Image');
-  picture.setAttribute('data-aue-variation', 'master');
 
   const sourceLarge = document.createElement('source');
   sourceLarge.media = '(min-width: 600px)';
@@ -87,18 +85,16 @@ function createAdventureCard(adventure) {
   const title = document.createElement('h3');
   title.textContent = adventure.title;
   // eslint-disable-next-line no-underscore-dangle
-  title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
+  title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
   title.setAttribute('data-aue-type', 'reference');
   title.setAttribute('data-aue-label', 'Adventure Title');
-  title.setAttribute('data-aue-variation', 'master');
 
   const description = document.createElement('p');
   description.textContent = adventure.description;
   // eslint-disable-next-line no-underscore-dangle
-  description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
+  description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
   description.setAttribute('data-aue-type', 'reference');
   description.setAttribute('data-aue-label', 'Adventure Description');
-  description.setAttribute('data-aue-variation', 'master');
 
   content.appendChild(title);
   content.appendChild(description);
