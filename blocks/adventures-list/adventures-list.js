@@ -1,12 +1,20 @@
+// eslint-disable-next-line no-console -- Debugging Universal Editor context
+console.log('[adventures-list] window.location.href:', window.location.href);
+
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
 const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
 
 function isUniversalEditor() {
+  // eslint-disable-next-line no-console -- Debugging Universal Editor context
+  console.log('[adventures-list] isUniversalEditor check:', window.location.href.includes('/aem/universal-editor/canvas'));
   return window.location.href.includes('/aem/universal-editor/canvas');
 }
 
 function getGraphqlUrl() {
-  return isUniversalEditor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
+  const url = isUniversalEditor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
+  // eslint-disable-next-line no-console -- Debugging Universal Editor context
+  console.log('[adventures-list] Using GraphQL endpoint:', url);
+  return url;
 }
 
 function createErrorState(message) {
@@ -29,26 +37,31 @@ function createErrorState(message) {
 async function fetchAdventures() {
   try {
     const fetchUrl = `${getGraphqlUrl()}/graphql/execute.json/wknd-shared/adventures-all`;
+    // eslint-disable-next-line no-console -- Debugging Universal Editor context
+    console.log('[adventures-list] Fetching adventures from:', fetchUrl);
     const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    // eslint-disable-next-line no-console -- Debugging Universal Editor context
+    console.log('[adventures-list] Data received:', data);
     if (!data?.data?.adventureList?.items) {
       throw new Error('Invalid data format received');
     }
-    // eslint-disable-next-line no-console
-    console.log('First adventure properties:', Object.keys(data.data.adventureList.items[0]));
-    // eslint-disable-next-line no-console
-    console.log('First adventure:', JSON.stringify(data.data.adventureList.items[0], null, 2));
+    // eslint-disable-next-line no-console -- Debugging Universal Editor context
+    console.log('[adventures-list] First adventure:', data.data.adventureList.items[0]);
     return data.data.adventureList.items;
   } catch (error) {
-    console.error('Error fetching adventures:', error);
+    // eslint-disable-next-line no-console -- Debugging Universal Editor context
+    console.error('[adventures-list] Error fetching adventures:', error);
     throw error; // Re-throw to handle in the decorate function
   }
 }
 
 function createAdventureCard(adventure) {
+  // eslint-disable-next-line no-console -- Debugging Universal Editor context
+  console.log('[adventures-list] Rendering card:', { title: adventure.title, slug: adventure.slug, primaryImage: adventure.primaryImage });
   const link = document.createElement('a');
   // eslint-disable-next-line no-underscore-dangle
   const pathParts = adventure._path.split('/adventures/')[1].split('/');
