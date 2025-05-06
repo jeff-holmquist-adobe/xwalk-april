@@ -59,6 +59,7 @@ function createAdventureDetail(adventure) {
   detail.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   detail.setAttribute('data-aue-type', 'reference');
   detail.setAttribute('data-aue-label', 'Adventure Detail');
+  detail.setAttribute('data-aue-variation', 'master');
 
   const header = document.createElement('div');
   header.className = 'adventure-header';
@@ -69,6 +70,7 @@ function createAdventureDetail(adventure) {
   title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   title.setAttribute('data-aue-type', 'reference');
   title.setAttribute('data-aue-label', 'Adventure Title');
+  title.setAttribute('data-aue-variation', 'master');
   header.appendChild(title);
 
   if (adventure.activity) {
@@ -79,6 +81,7 @@ function createAdventureDetail(adventure) {
     activity.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     activity.setAttribute('data-aue-type', 'reference');
     activity.setAttribute('data-aue-label', 'Adventure Activity');
+    activity.setAttribute('data-aue-variation', 'master');
     header.appendChild(activity);
   }
 
@@ -91,6 +94,7 @@ function createAdventureDetail(adventure) {
     imageContainer.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}`);
     imageContainer.setAttribute('data-aue-type', 'reference');
     imageContainer.setAttribute('data-aue-label', 'Adventure Image');
+    imageContainer.setAttribute('data-aue-variation', 'master');
 
     const image = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
@@ -112,6 +116,7 @@ function createAdventureDetail(adventure) {
   info.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   info.setAttribute('data-aue-type', 'reference');
   info.setAttribute('data-aue-label', 'Adventure Info');
+  info.setAttribute('data-aue-variation', 'master');
 
   const details = [
     { label: 'Price', value: `$${adventure.price}` },
@@ -129,6 +134,7 @@ function createAdventureDetail(adventure) {
       detailItem.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
       detailItem.setAttribute('data-aue-type', 'reference');
       detailItem.setAttribute('data-aue-label', `${label} Detail`);
+      detailItem.setAttribute('data-aue-variation', 'master');
       info.appendChild(detailItem);
     }
   });
@@ -143,6 +149,7 @@ function createAdventureDetail(adventure) {
     description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     description.setAttribute('data-aue-type', 'reference');
     description.setAttribute('data-aue-label', 'Adventure Description');
+    description.setAttribute('data-aue-variation', 'master');
     content.appendChild(description);
   }
 
@@ -154,6 +161,7 @@ function createAdventureDetail(adventure) {
     itinerary.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     itinerary.setAttribute('data-aue-type', 'reference');
     itinerary.setAttribute('data-aue-label', 'Adventure Itinerary');
+    itinerary.setAttribute('data-aue-variation', 'master');
     content.appendChild(itinerary);
   }
 
