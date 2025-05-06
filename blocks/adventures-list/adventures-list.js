@@ -1,4 +1,13 @@
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
+const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
+
+function isUniversalEditor() {
+  return window.location.href.includes('/aem/universal-editor/canvas');
+}
+
+function getGraphqlUrl() {
+  return isUniversalEditor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
+}
 
 function createErrorState(message) {
   const errorContainer = document.createElement('div');
@@ -19,7 +28,8 @@ function createErrorState(message) {
 
 async function fetchAdventures() {
   try {
-    const response = await fetch(`${AEM_PUBLISH_URL}/graphql/execute.json/wknd-shared/adventures-all`);
+    const fetchUrl = `${getGraphqlUrl()}/graphql/execute.json/wknd-shared/adventures-all`;
+    const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -89,14 +99,7 @@ function createAdventureCard(adventure) {
   title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-label', 'Adventure Title');
 
-  const description = document.createElement('p');
-  description.textContent = adventure.description;
-  description.setAttribute('data-aue-prop', 'description');
-  description.setAttribute('data-aue-type', 'richtext');
-  description.setAttribute('data-aue-label', 'Adventure Description');
-
   content.appendChild(title);
-  content.appendChild(description);
   card.appendChild(picture);
   card.appendChild(content);
 
