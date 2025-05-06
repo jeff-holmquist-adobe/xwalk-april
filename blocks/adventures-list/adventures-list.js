@@ -92,7 +92,7 @@ function createAdventureCard(adventure) {
   const description = document.createElement('p');
   description.textContent = adventure.description;
   description.setAttribute('data-aue-prop', 'description');
-  description.setAttribute('data-aue-type', 'text');
+  description.setAttribute('data-aue-type', 'richtext');
   description.setAttribute('data-aue-label', 'Adventure Description');
 
   content.appendChild(title);
