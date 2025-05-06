@@ -50,7 +50,7 @@ function createAdventureCard(adventure) {
   card.className = 'adventure-card';
   // Add Universal Editor instrumentation
   // eslint-disable-next-line no-underscore-dangle
-  card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
+  card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/jcr:content/data/master`);
   card.setAttribute('data-aue-type', 'container');
   card.setAttribute('data-aue-label', 'Adventure Card');
 
