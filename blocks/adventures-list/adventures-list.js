@@ -4,15 +4,15 @@ console.log('[adventures-list] window.location.href:', window.location.href);
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
 const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
 
-function isUniversalEditor() {
-  // eslint-disable-next-line no-console -- Debugging Universal Editor context
-  console.log('[adventures-list] isUniversalEditor check:', window.location.href.includes('/aem/universal-editor/canvas'));
-  return window.location.href.includes('/aem/universal-editor/canvas');
+function isAuthor() {
+  // eslint-disable-next-line no-console -- Debugging author domain check
+  console.log('[adventures-list] isAuthor check:', window.location.hostname);
+  return window.location.hostname.includes('author-') && window.location.hostname.includes('adobeaemcloud.com');
 }
 
 function getGraphqlUrl() {
-  const url = isUniversalEditor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
-  // eslint-disable-next-line no-console -- Debugging Universal Editor context
+  const url = isAuthor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
+  // eslint-disable-next-line no-console -- Debugging GraphQL endpoint selection
   console.log('[adventures-list] Using GraphQL endpoint:', url);
   return url;
 }
