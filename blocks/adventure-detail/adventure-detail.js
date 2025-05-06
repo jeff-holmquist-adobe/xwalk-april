@@ -1,4 +1,22 @@
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
+const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
+
+function createErrorState(message) {
+  const errorContainer = document.createElement('div');
+  errorContainer.className = 'adventure-error';
+
+  const icon = document.createElement('div');
+  icon.className = 'adventure-error-icon';
+  icon.innerHTML = '⚠️';
+
+  const text = document.createElement('div');
+  text.className = 'adventure-error-text';
+  text.innerHTML = `<h2>Unable to Load Adventure</h2><p>${message}</p>`;
+
+  errorContainer.appendChild(icon);
+  errorContainer.appendChild(text);
+  return errorContainer;
+}
 
 async function fetchAdventureBySlug(slug) {
   try {
@@ -17,13 +35,19 @@ async function fetchAdventureBySlug(slug) {
     const data = await response.json();
 
     if (!data?.data) {
-      return null;
+      throw new Error('Invalid data format received');
     }
 
-    return data.data.adventureBySlug || data.data.adventureList?.items?.[0];
+    const adventure = data.data.adventureBySlug || data.data.adventureList?.items?.[0];
+    if (!adventure) {
+      throw new Error('Adventure not found');
+    }
+
+    return adventure;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error fetching adventure:', error);
-    return null;
+    throw error; // Re-throw to handle in the decorate function
   }
 }
 
@@ -32,18 +56,30 @@ function createAdventureDetail(adventure) {
 
   const detail = document.createElement('div');
   detail.className = 'adventure-detail';
+  // eslint-disable-next-line no-underscore-dangle
+  detail.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  detail.setAttribute('data-aue-type', 'reference');
+  detail.setAttribute('data-aue-label', 'Adventure Detail');
 
   const header = document.createElement('div');
   header.className = 'adventure-header';
 
   const title = document.createElement('h1');
   title.textContent = adventure.title;
+  // eslint-disable-next-line no-underscore-dangle
+  title.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  title.setAttribute('data-aue-type', 'reference');
+  title.setAttribute('data-aue-label', 'Adventure Title');
   header.appendChild(title);
 
   if (adventure.activity) {
     const activity = document.createElement('p');
     activity.className = 'activity';
     activity.textContent = adventure.activity;
+    // eslint-disable-next-line no-underscore-dangle
+    activity.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    activity.setAttribute('data-aue-type', 'reference');
+    activity.setAttribute('data-aue-label', 'Adventure Activity');
     header.appendChild(activity);
   }
 
@@ -52,9 +88,12 @@ function createAdventureDetail(adventure) {
   if (adventure.primaryImage) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'adventure-image-container';
+    // eslint-disable-next-line no-underscore-dangle
+    imageContainer.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure.primaryImage._path}`);
+    imageContainer.setAttribute('data-aue-type', 'reference');
+    imageContainer.setAttribute('data-aue-label', 'Adventure Image');
 
     const image = document.createElement('img');
-    // The _dynamicUrl property comes from the AEM API
     // eslint-disable-next-line no-underscore-dangle
     const imageUrl = adventure.primaryImage._dynamicUrl || adventure.primaryImage.dynamicUrl;
     image.src = `${AEM_PUBLISH_URL}${imageUrl}`;
@@ -70,6 +109,10 @@ function createAdventureDetail(adventure) {
 
   const info = document.createElement('div');
   info.className = 'adventure-info';
+  // eslint-disable-next-line no-underscore-dangle
+  info.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  info.setAttribute('data-aue-type', 'reference');
+  info.setAttribute('data-aue-label', 'Adventure Info');
 
   const details = [
     { label: 'Price', value: `$${adventure.price}` },
@@ -83,6 +126,10 @@ function createAdventureDetail(adventure) {
       const detailItem = document.createElement('div');
       detailItem.className = 'detail-item';
       detailItem.innerHTML = `<strong>${label}:</strong> ${value}`;
+      // eslint-disable-next-line no-underscore-dangle
+      detailItem.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+      detailItem.setAttribute('data-aue-type', 'reference');
+      detailItem.setAttribute('data-aue-label', `${label} Detail`);
       info.appendChild(detailItem);
     }
   });
@@ -93,6 +140,10 @@ function createAdventureDetail(adventure) {
     const description = document.createElement('div');
     description.className = 'adventure-description';
     description.innerHTML = adventure.description.html;
+    // eslint-disable-next-line no-underscore-dangle
+    description.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    description.setAttribute('data-aue-type', 'reference');
+    description.setAttribute('data-aue-label', 'Adventure Description');
     content.appendChild(description);
   }
 
@@ -100,6 +151,10 @@ function createAdventureDetail(adventure) {
     const itinerary = document.createElement('div');
     itinerary.className = 'adventure-itinerary';
     itinerary.innerHTML = adventure.itinerary.html;
+    // eslint-disable-next-line no-underscore-dangle
+    itinerary.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    itinerary.setAttribute('data-aue-type', 'reference');
+    itinerary.setAttribute('data-aue-label', 'Adventure Itinerary');
     content.appendChild(itinerary);
   }
 
@@ -109,22 +164,31 @@ function createAdventureDetail(adventure) {
 }
 
 export default async function decorate(block) {
-  const path = window.location.pathname;
-  const match = path.match(/\/adventures\/([^/]+)/);
-  const slug = match ? match[1] : null;
+  try {
+    const slug = window.location.pathname.split('/adventures/')[1];
+    if (!slug) {
+      throw new Error('Invalid adventure URL');
+    }
 
-  if (!slug) {
-    return;
-  }
+    const adventure = await fetchAdventureBySlug(slug);
+    const detail = createAdventureDetail(adventure);
 
-  const adventure = await fetchAdventureBySlug(slug);
-  if (!adventure) {
-    return;
-  }
-
-  const detail = createAdventureDetail(adventure);
-  if (detail) {
-    block.innerHTML = '';
-    block.appendChild(detail);
+    if (detail) {
+      block.textContent = '';
+      block.appendChild(detail);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to load adventure:', error);
+    let errorMessage = 'We\'re having trouble loading this adventure. ';
+    if (error.message.includes('Failed to fetch')) {
+      errorMessage += 'This might be because our servers are currently hibernating. Please try again in a few minutes.';
+    } else if (error.message.includes('not found')) {
+      errorMessage += 'The adventure you\'re looking for doesn\'t exist or has been removed.';
+    } else {
+      errorMessage += 'Please try again later.';
+    }
+    block.textContent = '';
+    block.appendChild(createErrorState(errorMessage));
   }
 }

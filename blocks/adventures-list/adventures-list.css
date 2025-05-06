@@ -5,6 +5,13 @@
   padding: 2rem;
 }
 
+.adventures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
 .adventure-card-link {
   text-decoration: none;
   color: inherit;
@@ -55,4 +62,35 @@
   margin: 0;
   color: #666;
   line-height: 1.6;
+}
+
+.adventures-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+  background-color: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  margin: 2rem;
+}
+
+.adventures-error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.adventures-error-text h3 {
+  color: #d32f2f;
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.adventures-error-text p {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
 } 

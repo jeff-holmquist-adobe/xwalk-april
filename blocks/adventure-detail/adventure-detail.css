@@ -210,4 +210,38 @@
   .adventure-info {
     break-inside: avoid;
   }
+}
+
+.adventure-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  text-align: center;
+  background-color: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  margin: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.adventure-error-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.adventure-error-text h2 {
+  color: #d32f2f;
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+.adventure-error-text p {
+  color: #666;
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.6;
 } 
