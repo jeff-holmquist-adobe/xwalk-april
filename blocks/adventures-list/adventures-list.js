@@ -1,5 +1,4 @@
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
-const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
 
 function createErrorState(message) {
   const errorContainer = document.createElement('div');
@@ -51,7 +50,7 @@ function createAdventureCard(adventure) {
   card.className = 'adventure-card';
   // Add Universal Editor instrumentation
   // eslint-disable-next-line no-underscore-dangle
-  card.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   card.setAttribute('data-aue-type', 'reference');
   card.setAttribute('data-aue-label', 'Adventure Card');
 
@@ -60,7 +59,7 @@ function createAdventureCard(adventure) {
 
   const picture = document.createElement('picture');
   // eslint-disable-next-line no-underscore-dangle
-  picture.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure.primaryImage._path}`);
+  picture.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}`);
   picture.setAttribute('data-aue-type', 'reference');
   picture.setAttribute('data-aue-label', 'Adventure Image');
 
@@ -86,14 +85,14 @@ function createAdventureCard(adventure) {
   const title = document.createElement('h3');
   title.textContent = adventure.title;
   // eslint-disable-next-line no-underscore-dangle
-  title.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   title.setAttribute('data-aue-type', 'reference');
   title.setAttribute('data-aue-label', 'Adventure Title');
 
   const description = document.createElement('p');
   description.textContent = adventure.description;
   // eslint-disable-next-line no-underscore-dangle
-  description.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   description.setAttribute('data-aue-type', 'reference');
   description.setAttribute('data-aue-label', 'Adventure Description');
 

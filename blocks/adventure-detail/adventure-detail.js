@@ -1,5 +1,4 @@
 const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
-const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
 
 function createErrorState(message) {
   const errorContainer = document.createElement('div');
@@ -57,7 +56,7 @@ function createAdventureDetail(adventure) {
   const detail = document.createElement('div');
   detail.className = 'adventure-detail';
   // eslint-disable-next-line no-underscore-dangle
-  detail.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  detail.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   detail.setAttribute('data-aue-type', 'reference');
   detail.setAttribute('data-aue-label', 'Adventure Detail');
 
@@ -67,7 +66,7 @@ function createAdventureDetail(adventure) {
   const title = document.createElement('h1');
   title.textContent = adventure.title;
   // eslint-disable-next-line no-underscore-dangle
-  title.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   title.setAttribute('data-aue-type', 'reference');
   title.setAttribute('data-aue-label', 'Adventure Title');
   header.appendChild(title);
@@ -77,7 +76,7 @@ function createAdventureDetail(adventure) {
     activity.className = 'activity';
     activity.textContent = adventure.activity;
     // eslint-disable-next-line no-underscore-dangle
-    activity.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    activity.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     activity.setAttribute('data-aue-type', 'reference');
     activity.setAttribute('data-aue-label', 'Adventure Activity');
     header.appendChild(activity);
@@ -89,7 +88,7 @@ function createAdventureDetail(adventure) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'adventure-image-container';
     // eslint-disable-next-line no-underscore-dangle
-    imageContainer.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure.primaryImage._path}`);
+    imageContainer.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}`);
     imageContainer.setAttribute('data-aue-type', 'reference');
     imageContainer.setAttribute('data-aue-label', 'Adventure Image');
 
@@ -110,7 +109,7 @@ function createAdventureDetail(adventure) {
   const info = document.createElement('div');
   info.className = 'adventure-info';
   // eslint-disable-next-line no-underscore-dangle
-  info.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+  info.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
   info.setAttribute('data-aue-type', 'reference');
   info.setAttribute('data-aue-label', 'Adventure Info');
 
@@ -127,7 +126,7 @@ function createAdventureDetail(adventure) {
       detailItem.className = 'detail-item';
       detailItem.innerHTML = `<strong>${label}:</strong> ${value}`;
       // eslint-disable-next-line no-underscore-dangle
-      detailItem.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+      detailItem.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
       detailItem.setAttribute('data-aue-type', 'reference');
       detailItem.setAttribute('data-aue-label', `${label} Detail`);
       info.appendChild(detailItem);
@@ -141,7 +140,7 @@ function createAdventureDetail(adventure) {
     description.className = 'adventure-description';
     description.innerHTML = adventure.description.html;
     // eslint-disable-next-line no-underscore-dangle
-    description.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     description.setAttribute('data-aue-type', 'reference');
     description.setAttribute('data-aue-label', 'Adventure Description');
     content.appendChild(description);
@@ -152,7 +151,7 @@ function createAdventureDetail(adventure) {
     itinerary.className = 'adventure-itinerary';
     itinerary.innerHTML = adventure.itinerary.html;
     // eslint-disable-next-line no-underscore-dangle
-    itinerary.setAttribute('data-aue-resource', `${AEM_AUTHOR_URL}${adventure._path}`);
+    itinerary.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}`);
     itinerary.setAttribute('data-aue-type', 'reference');
     itinerary.setAttribute('data-aue-label', 'Adventure Itinerary');
     content.appendChild(itinerary);
