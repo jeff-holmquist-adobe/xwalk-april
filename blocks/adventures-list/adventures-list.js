@@ -64,21 +64,15 @@ function createAdventureCard(adventure) {
   console.log('[adventures-list] Rendering card:', { title: adventure.title, slug: adventure.slug, primaryImage: adventure.primaryImage });
 
   let imageUrl = '';
-  // eslint-disable-next-line no-underscore-dangle
   if (isAuthor() && adventure.primaryImage._authorUrl) {
-    // eslint-disable-next-line no-underscore-dangle
     imageUrl = adventure.primaryImage._authorUrl;
-  // eslint-disable-next-line no-underscore-dangle
   } else if (adventure.primaryImage._dynamicUrl) {
-    // eslint-disable-next-line no-underscore-dangle
     imageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
   } else if (adventure.primaryImage._publishUrl) {
-    // eslint-disable-next-line no-underscore-dangle
     imageUrl = adventure.primaryImage._publishUrl;
   }
 
   const link = document.createElement('a');
-  // eslint-disable-next-line no-underscore-dangle
   const pathParts = adventure._path.split('/adventures/')[1].split('/');
   const slug = pathParts[0];
   link.href = `/adventures/${slug}`;
@@ -87,11 +81,9 @@ function createAdventureCard(adventure) {
   const card = document.createElement('div');
   card.className = 'adventure-card';
   // Add Universal Editor instrumentation
-  // eslint-disable-next-line no-underscore-dangle
   card.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/jcr:content/data/master`);
   card.setAttribute('data-aue-type', 'reference');
   card.setAttribute('data-aue-filter', 'cf');
-  // eslint-disable-next-line no-underscore-dangle
   card.setAttribute('data-aue-label', `Content Fragment ${adventure._path}`);
 
   const picture = document.createElement('picture');
