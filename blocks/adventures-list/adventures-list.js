@@ -62,6 +62,21 @@ async function fetchAdventures() {
 function createAdventureCard(adventure) {
   // eslint-disable-next-line no-console -- Debugging Universal Editor context
   console.log('[adventures-list] Rendering card:', { title: adventure.title, slug: adventure.slug, primaryImage: adventure.primaryImage });
+
+  let imageUrl = '';
+  // eslint-disable-next-line no-underscore-dangle
+  if (isAuthor() && adventure.primaryImage._authorUrl) {
+    // eslint-disable-next-line no-underscore-dangle
+    imageUrl = adventure.primaryImage._authorUrl;
+  // eslint-disable-next-line no-underscore-dangle
+  } else if (adventure.primaryImage._dynamicUrl) {
+    // eslint-disable-next-line no-underscore-dangle
+    imageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
+  } else if (adventure.primaryImage._publishUrl) {
+    // eslint-disable-next-line no-underscore-dangle
+    imageUrl = adventure.primaryImage._publishUrl;
+  }
+
   const link = document.createElement('a');
   // eslint-disable-next-line no-underscore-dangle
   const pathParts = adventure._path.split('/adventures/')[1].split('/');
@@ -79,9 +94,6 @@ function createAdventureCard(adventure) {
   // eslint-disable-next-line no-underscore-dangle
   card.setAttribute('data-aue-label', `Content Fragment ${adventure._path}`);
 
-  // eslint-disable-next-line no-underscore-dangle
-  const fullImageUrl = `${AEM_PUBLISH_URL}${adventure.primaryImage._dynamicUrl}`;
-
   const picture = document.createElement('picture');
   picture.setAttribute('data-aue-prop', 'primaryImage');
   picture.setAttribute('data-aue-type', 'media');
@@ -89,15 +101,15 @@ function createAdventureCard(adventure) {
 
   const sourceLarge = document.createElement('source');
   sourceLarge.media = '(min-width: 600px)';
-  sourceLarge.srcset = `${fullImageUrl}&width=400`;
+  sourceLarge.srcset = imageUrl;
 
   const sourceSmall = document.createElement('source');
-  sourceSmall.srcset = `${fullImageUrl}&width=200`;
+  sourceSmall.srcset = imageUrl;
 
   const img = document.createElement('img');
   img.loading = 'lazy';
   img.alt = adventure.title;
-  img.src = `${fullImageUrl}&width=400`;
+  img.src = imageUrl;
 
   picture.appendChild(sourceLarge);
   picture.appendChild(sourceSmall);
