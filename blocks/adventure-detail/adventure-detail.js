@@ -111,9 +111,10 @@ function createAdventureDetail(adventure) {
   const details = [
     {
       label: 'Price',
-      value: `$${adventure.price}`,
+      value: adventure.price,
+      displayValue: `$${adventure.price}`,
       prop: 'price',
-      type: 'text',
+      type: 'number',
     },
     {
       label: 'Trip Length',
@@ -123,9 +124,10 @@ function createAdventureDetail(adventure) {
     },
     {
       label: 'Group Size',
-      value: `${adventure.groupSize} people`,
+      value: adventure.groupSize,
+      displayValue: `${adventure.groupSize} people`,
       prop: 'groupSize',
-      type: 'text',
+      type: 'number',
     },
     {
       label: 'Difficulty',
@@ -137,13 +139,14 @@ function createAdventureDetail(adventure) {
   details.forEach(({
     label,
     value,
+    displayValue,
     prop,
     type,
   }) => {
     if (value) {
       const detailItem = document.createElement('div');
       detailItem.className = 'detail-item';
-      detailItem.innerHTML = `<strong>${label}:</strong> ${value}`;
+      detailItem.innerHTML = `<strong>${label}:</strong> ${displayValue || value}`;
       detailItem.setAttribute('data-aue-prop', prop);
       detailItem.setAttribute('data-aue-type', type);
       detailItem.setAttribute('data-aue-label', `${label} Detail`);
