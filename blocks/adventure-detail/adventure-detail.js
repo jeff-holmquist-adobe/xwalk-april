@@ -111,45 +111,45 @@ function createAdventureDetail(adventure) {
   const details = [
     {
       label: 'Price',
-      value: adventure.price,
-      displayValue: `$${adventure.price}`,
-      prop: 'price',
-      type: 'number',
+      value: `$${adventure.price}`,
+      editable: false,
     },
     {
       label: 'Trip Length',
       value: adventure.tripLength,
       prop: 'tripLength',
       type: 'text',
+      editable: true,
     },
     {
       label: 'Group Size',
-      value: adventure.groupSize,
-      displayValue: `${adventure.groupSize} people`,
-      prop: 'groupSize',
-      type: 'number',
+      value: `${adventure.groupSize} people`,
+      editable: false,
     },
     {
       label: 'Difficulty',
       value: adventure.difficulty,
-      prop: 'difficulty',
-      type: 'text',
+      editable: false,
     },
   ];
   details.forEach(({
     label,
     value,
-    displayValue,
     prop,
     type,
+    editable,
   }) => {
     if (value) {
       const detailItem = document.createElement('div');
       detailItem.className = 'detail-item';
-      detailItem.innerHTML = `<strong>${label}:</strong> ${displayValue || value}`;
-      detailItem.setAttribute('data-aue-prop', prop);
-      detailItem.setAttribute('data-aue-type', type);
-      detailItem.setAttribute('data-aue-label', `${label} Detail`);
+      detailItem.innerHTML = `<strong>${label}:</strong> <span class="detail-value"></span>`;
+      const valueSpan = detailItem.querySelector('.detail-value');
+      valueSpan.textContent = value;
+      if (editable) {
+        valueSpan.setAttribute('data-aue-prop', prop);
+        valueSpan.setAttribute('data-aue-type', type);
+        valueSpan.setAttribute('data-aue-label', `${label} Detail`);
+      }
       info.appendChild(detailItem);
     }
   });
