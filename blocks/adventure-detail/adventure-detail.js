@@ -61,15 +61,13 @@ function createAdventureDetail(adventure) {
   detail.setAttribute('data-aue-filter', 'cf');
   detail.setAttribute('data-aue-label', `Content Fragment ${adventure._path}`);
 
-  const header = document.createElement('div');
-  header.className = 'adventure-header';
-
+  // Title
   const title = document.createElement('h1');
   title.textContent = adventure.title;
   title.setAttribute('data-aue-prop', 'title');
   title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-label', 'Adventure Title');
-  header.appendChild(title);
+  detail.appendChild(title);
 
   if (adventure.activity) {
     const activity = document.createElement('p');
@@ -78,9 +76,8 @@ function createAdventureDetail(adventure) {
     activity.setAttribute('data-aue-prop', 'activity');
     activity.setAttribute('data-aue-type', 'text');
     activity.setAttribute('data-aue-label', 'Adventure Activity');
-    header.appendChild(activity);
+    detail.appendChild(activity);
   }
-  detail.appendChild(header);
 
   if (adventure.primaryImage) {
     const imageContainer = document.createElement('div');
@@ -104,56 +101,32 @@ function createAdventureDetail(adventure) {
     imageContainer.appendChild(image);
     detail.appendChild(imageContainer);
   }
-  const content = document.createElement('div');
-  content.className = 'adventure-content';
-  const info = document.createElement('div');
-  info.className = 'adventure-info';
-  const details = [
-    {
-      label: 'Price',
-      value: `$${adventure.price}`,
-      editable: false,
-    },
-    {
-      label: 'Trip Length',
-      value: adventure.tripLength,
-      prop: 'tripLength',
-      type: 'text',
-      editable: true,
-    },
-    {
-      label: 'Group Size',
-      value: `${adventure.groupSize} people`,
-      editable: false,
-    },
-    {
-      label: 'Difficulty',
-      value: adventure.difficulty,
-      editable: false,
-    },
-  ];
-  details.forEach(({
-    label,
-    value,
-    prop,
-    type,
-    editable,
-  }) => {
-    if (value) {
-      const detailItem = document.createElement('div');
-      detailItem.className = 'detail-item';
-      detailItem.innerHTML = `<strong>${label}:</strong> <span class="detail-value"></span>`;
-      const valueSpan = detailItem.querySelector('.detail-value');
-      valueSpan.textContent = value;
-      if (editable) {
-        valueSpan.setAttribute('data-aue-prop', prop);
-        valueSpan.setAttribute('data-aue-type', type);
-        valueSpan.setAttribute('data-aue-label', `${label} Detail`);
-      }
-      info.appendChild(detailItem);
-    }
-  });
-  content.appendChild(info);
+
+  const price = document.createElement('div');
+  price.className = 'detail-item';
+  price.innerHTML = `<strong>Price:</strong> $${adventure.price}`;
+  detail.appendChild(price);
+
+  const tripLength = document.createElement('div');
+  tripLength.className = 'detail-item';
+  tripLength.innerHTML = '<strong>Trip Length:</strong> <span class=\'detail-value\'></span>';
+  const tripLengthValue = tripLength.querySelector('.detail-value');
+  tripLengthValue.textContent = adventure.tripLength;
+  tripLengthValue.setAttribute('data-aue-prop', 'tripLength');
+  tripLengthValue.setAttribute('data-aue-type', 'text');
+  tripLengthValue.setAttribute('data-aue-label', 'Trip Length Detail');
+  detail.appendChild(tripLength);
+
+  const groupSize = document.createElement('div');
+  groupSize.className = 'detail-item';
+  groupSize.innerHTML = `<strong>Group Size:</strong> ${adventure.groupSize} people`;
+  detail.appendChild(groupSize);
+
+  const difficulty = document.createElement('div');
+  difficulty.className = 'detail-item';
+  difficulty.innerHTML = `<strong>Difficulty:</strong> ${adventure.difficulty}`;
+  detail.appendChild(difficulty);
+
   if (adventure.description?.html) {
     const description = document.createElement('div');
     description.className = 'adventure-description';
@@ -161,8 +134,9 @@ function createAdventureDetail(adventure) {
     description.setAttribute('data-aue-prop', 'description');
     description.setAttribute('data-aue-type', 'richtext');
     description.setAttribute('data-aue-label', 'Adventure Description');
-    content.appendChild(description);
+    detail.appendChild(description);
   }
+
   if (adventure.itinerary?.html) {
     const itinerary = document.createElement('div');
     itinerary.className = 'adventure-itinerary';
@@ -170,9 +144,9 @@ function createAdventureDetail(adventure) {
     itinerary.setAttribute('data-aue-prop', 'itinerary');
     itinerary.setAttribute('data-aue-type', 'richtext');
     itinerary.setAttribute('data-aue-label', 'Adventure Itinerary');
-    content.appendChild(itinerary);
+    detail.appendChild(itinerary);
   }
-  detail.appendChild(content);
+
   return detail;
 }
 
