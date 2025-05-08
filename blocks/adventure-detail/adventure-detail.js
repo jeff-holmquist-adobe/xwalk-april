@@ -113,7 +113,7 @@ function createAdventureDetail(adventure) {
       label: 'Price',
       value: `$${adventure.price}`,
       prop: 'price',
-      type: 'number',
+      type: 'text',
     },
     {
       label: 'Trip Length',
@@ -137,14 +137,13 @@ function createAdventureDetail(adventure) {
   details.forEach(({
     label,
     value,
-    displayValue,
     prop,
     type,
   }) => {
     if (value) {
       const detailItem = document.createElement('div');
       detailItem.className = 'detail-item';
-      detailItem.innerHTML = `<strong>${label}:</strong> ${displayValue || value}`;
+      detailItem.innerHTML = `<strong>${label}:</strong> ${value}`;
       detailItem.setAttribute('data-aue-prop', prop);
       detailItem.setAttribute('data-aue-type', type);
       detailItem.setAttribute('data-aue-label', `${label} Detail`);
