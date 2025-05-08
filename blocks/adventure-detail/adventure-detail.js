@@ -67,8 +67,11 @@ function createAdventureDetail(adventure) {
   title.setAttribute('data-aue-prop', 'title');
   title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-label', 'Adventure Title');
-  detail.appendChild(title);
 
+  // Create header for title and activity
+  const header = document.createElement('div');
+  header.className = 'adventure-header';
+  header.appendChild(title);
   if (adventure.activity) {
     const activity = document.createElement('p');
     activity.className = 'activity';
@@ -76,8 +79,11 @@ function createAdventureDetail(adventure) {
     activity.setAttribute('data-aue-prop', 'activity');
     activity.setAttribute('data-aue-type', 'text');
     activity.setAttribute('data-aue-label', 'Adventure Activity');
-    detail.appendChild(activity);
+    header.appendChild(activity);
   }
+
+  // Insert header before image container
+  detail.appendChild(header);
 
   if (adventure.primaryImage) {
     const imageContainer = document.createElement('div');
@@ -105,7 +111,6 @@ function createAdventureDetail(adventure) {
   const price = document.createElement('div');
   price.className = 'detail-item';
   price.innerHTML = `<strong>Price:</strong> $${adventure.price}`;
-  detail.appendChild(price);
 
   const tripLength = document.createElement('div');
   tripLength.className = 'detail-item';
@@ -115,17 +120,22 @@ function createAdventureDetail(adventure) {
   tripLengthValue.setAttribute('data-aue-prop', 'tripLength');
   tripLengthValue.setAttribute('data-aue-type', 'text');
   tripLengthValue.setAttribute('data-aue-label', 'Trip Length Detail');
-  detail.appendChild(tripLength);
 
   const groupSize = document.createElement('div');
   groupSize.className = 'detail-item';
   groupSize.innerHTML = `<strong>Group Size:</strong> ${adventure.groupSize} people`;
-  detail.appendChild(groupSize);
 
   const difficulty = document.createElement('div');
   difficulty.className = 'detail-item';
   difficulty.innerHTML = `<strong>Difficulty:</strong> ${adventure.difficulty}`;
-  detail.appendChild(difficulty);
+
+  const detailsRow = document.createElement('div');
+  detailsRow.className = 'adventure-details-row';
+  detailsRow.appendChild(price);
+  detailsRow.appendChild(tripLength);
+  detailsRow.appendChild(groupSize);
+  detailsRow.appendChild(difficulty);
+  detail.appendChild(detailsRow);
 
   if (adventure.description?.html) {
     const description = document.createElement('div');

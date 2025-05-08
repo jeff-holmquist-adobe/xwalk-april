@@ -244,4 +244,23 @@
   margin: 0;
   font-size: 1.2rem;
   line-height: 1.6;
+}
+
+.adventure-details-row {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.adventure-details-row .detail-item {
+  flex: 1 1 200px;
+  min-width: 180px;
+  background: var(--background-color-secondary, #f9f9f9);
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
 } 
