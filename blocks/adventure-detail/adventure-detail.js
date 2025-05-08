@@ -108,10 +108,6 @@ function createAdventureDetail(adventure) {
   content.className = 'adventure-content';
   const info = document.createElement('div');
   info.className = 'adventure-info';
-  info.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-  info.setAttribute('data-aue-type', 'reference');
-  info.setAttribute('data-aue-label', 'Adventure Info');
-  info.setAttribute('data-aue-variation', 'master');
   const details = [
     {
       label: 'Price',
