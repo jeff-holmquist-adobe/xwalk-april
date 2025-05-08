@@ -30,31 +30,26 @@ function createErrorState(message) {
 
 async function fetchAdventureBySlug(slug) {
   const baseUrl = isAuthor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
-  try {
-    const response = await fetch(`${baseUrl}/graphql/execute.json/wknd-shared/adventure-by-slug;slug=${slug}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-      mode: 'cors',
-      credentials: 'include',
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    if (!data?.data) {
-      throw new Error('Invalid data format received');
-    }
-    const adventure = data.data.adventureBySlug || data.data.adventureList?.items?.[0];
-    if (!adventure) {
-      throw new Error('Adventure not found');
-    }
-    return adventure;
-  } catch (error) {
-    console.error('Error fetching adventure:', error);
-    throw error;
+  const response = await fetch(`${baseUrl}/graphql/execute.json/wknd-shared/adventure-by-slug;slug=${slug}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+    mode: 'cors',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  const data = await response.json();
+  if (!data?.data) {
+    throw new Error('Invalid data format received');
+  }
+  const adventure = data.data.adventureBySlug || data.data.adventureList?.items?.[0];
+  if (!adventure) {
+    throw new Error('Adventure not found');
+  }
+  return adventure;
 }
 
 function createAdventureDetail(adventure) {
@@ -80,10 +75,9 @@ function createAdventureDetail(adventure) {
     const activity = document.createElement('p');
     activity.className = 'activity';
     activity.textContent = adventure.activity;
-    activity.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-    activity.setAttribute('data-aue-type', 'reference');
+    activity.setAttribute('data-aue-prop', 'activity');
+    activity.setAttribute('data-aue-type', 'text');
     activity.setAttribute('data-aue-label', 'Adventure Activity');
-    activity.setAttribute('data-aue-variation', 'master');
     header.appendChild(activity);
   }
   detail.appendChild(header);
@@ -119,20 +113,44 @@ function createAdventureDetail(adventure) {
   info.setAttribute('data-aue-label', 'Adventure Info');
   info.setAttribute('data-aue-variation', 'master');
   const details = [
-    { label: 'Price', value: `$${adventure.price}` },
-    { label: 'Trip Length', value: adventure.tripLength },
-    { label: 'Group Size', value: `${adventure.groupSize} people` },
-    { label: 'Difficulty', value: adventure.difficulty },
+    {
+      label: 'Price',
+      value: `$${adventure.price}`,
+      prop: 'price',
+      type: 'number',
+    },
+    {
+      label: 'Trip Length',
+      value: adventure.tripLength,
+      prop: 'tripLength',
+      type: 'text',
+    },
+    {
+      label: 'Group Size',
+      value: `${adventure.groupSize} people`,
+      prop: 'groupSize',
+      type: 'number',
+    },
+    {
+      label: 'Difficulty',
+      value: adventure.difficulty,
+      prop: 'difficulty',
+      type: 'text',
+    },
   ];
-  details.forEach(({ label, value }) => {
+  details.forEach(({
+    label,
+    value,
+    prop,
+    type,
+  }) => {
     if (value) {
       const detailItem = document.createElement('div');
       detailItem.className = 'detail-item';
       detailItem.innerHTML = `<strong>${label}:</strong> ${value}`;
-      detailItem.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-      detailItem.setAttribute('data-aue-type', 'reference');
+      detailItem.setAttribute('data-aue-prop', prop);
+      detailItem.setAttribute('data-aue-type', type);
       detailItem.setAttribute('data-aue-label', `${label} Detail`);
-      detailItem.setAttribute('data-aue-variation', 'master');
       info.appendChild(detailItem);
     }
   });
@@ -141,20 +159,18 @@ function createAdventureDetail(adventure) {
     const description = document.createElement('div');
     description.className = 'adventure-description';
     description.innerHTML = adventure.description.html;
-    description.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-    description.setAttribute('data-aue-type', 'reference');
+    description.setAttribute('data-aue-prop', 'description');
+    description.setAttribute('data-aue-type', 'richtext');
     description.setAttribute('data-aue-label', 'Adventure Description');
-    description.setAttribute('data-aue-variation', 'master');
     content.appendChild(description);
   }
   if (adventure.itinerary?.html) {
     const itinerary = document.createElement('div');
     itinerary.className = 'adventure-itinerary';
     itinerary.innerHTML = adventure.itinerary.html;
-    itinerary.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-    itinerary.setAttribute('data-aue-type', 'reference');
+    itinerary.setAttribute('data-aue-prop', 'itinerary');
+    itinerary.setAttribute('data-aue-type', 'richtext');
     itinerary.setAttribute('data-aue-label', 'Adventure Itinerary');
-    itinerary.setAttribute('data-aue-variation', 'master');
     content.appendChild(itinerary);
   }
   detail.appendChild(content);
@@ -174,7 +190,6 @@ export default async function decorate(block) {
       block.appendChild(detail);
     }
   } catch (error) {
-    console.error('Failed to load adventure:', error);
     let errorMessage = 'We\'re having trouble loading this adventure. ';
     if (error.message.includes('Failed to fetch')) {
       errorMessage += 'This might be because our servers are currently hibernating. Please try again in a few minutes.';
