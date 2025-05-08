@@ -61,19 +61,21 @@ function createAdventureDetail(adventure) {
   if (!adventure) return null;
   const detail = document.createElement('div');
   detail.className = 'adventure-detail';
-  detail.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
+  detail.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/jcr:content/data/master`);
   detail.setAttribute('data-aue-type', 'reference');
-  detail.setAttribute('data-aue-label', 'Adventure Detail');
-  detail.setAttribute('data-aue-variation', 'master');
+  detail.setAttribute('data-aue-filter', 'cf');
+  detail.setAttribute('data-aue-label', `Content Fragment ${adventure._path}`);
+
   const header = document.createElement('div');
   header.className = 'adventure-header';
+
   const title = document.createElement('h1');
   title.textContent = adventure.title;
-  title.setAttribute('data-aue-resource', `urn:aemconnection:${adventure._path}/master`);
-  title.setAttribute('data-aue-type', 'reference');
+  title.setAttribute('data-aue-prop', 'title');
+  title.setAttribute('data-aue-type', 'text');
   title.setAttribute('data-aue-label', 'Adventure Title');
-  title.setAttribute('data-aue-variation', 'master');
   header.appendChild(title);
+
   if (adventure.activity) {
     const activity = document.createElement('p');
     activity.className = 'activity';
@@ -85,13 +87,13 @@ function createAdventureDetail(adventure) {
     header.appendChild(activity);
   }
   detail.appendChild(header);
+
   if (adventure.primaryImage) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'adventure-image-container';
-    imageContainer.setAttribute('data-aue-resource', `urn:aemconnection:${adventure.primaryImage._path}/master`);
-    imageContainer.setAttribute('data-aue-type', 'reference');
+    imageContainer.setAttribute('data-aue-prop', 'primaryImage');
+    imageContainer.setAttribute('data-aue-type', 'media');
     imageContainer.setAttribute('data-aue-label', 'Adventure Image');
-    imageContainer.setAttribute('data-aue-variation', 'master');
     let imageUrl = '';
     if (isAuthor() && adventure.primaryImage._authorUrl) {
       imageUrl = adventure.primaryImage._authorUrl;
