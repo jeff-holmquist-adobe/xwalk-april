@@ -59,6 +59,12 @@ async function fetchAdventures() {
   }
 }
 
+function getAdventureDetailUrl(slug) {
+  return isAuthor()
+    ? `/content/xwalk-april/adventures/${slug}`
+    : `/adventures/${slug}`;
+}
+
 function createAdventureCard(adventure) {
   // eslint-disable-next-line no-console -- Debugging Universal Editor context
   console.log('[adventures-list] Rendering card:', { title: adventure.title, slug: adventure.slug, primaryImage: adventure.primaryImage });
@@ -75,7 +81,7 @@ function createAdventureCard(adventure) {
   const link = document.createElement('a');
   const pathParts = adventure._path.split('/adventures/')[1].split('/');
   const slug = pathParts[0];
-  link.href = `/adventures/${slug}`;
+  link.href = getAdventureDetailUrl(slug);
   link.className = 'adventure-card-link';
 
   const card = document.createElement('div');
