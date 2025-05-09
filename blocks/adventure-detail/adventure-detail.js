@@ -82,11 +82,10 @@ function createAdventureDetail(adventure) {
     header.appendChild(activity);
   }
 
-  // Insert header before image container
-  detail.appendChild(header);
-
+  // Create image container if present
+  let imageContainer = null;
   if (adventure.primaryImage) {
-    const imageContainer = document.createElement('div');
+    imageContainer = document.createElement('div');
     imageContainer.className = 'adventure-image-container';
     imageContainer.setAttribute('data-aue-prop', 'primaryImage');
     imageContainer.setAttribute('data-aue-type', 'media');
@@ -105,8 +104,14 @@ function createAdventureDetail(adventure) {
     image.className = 'adventure-image';
     image.loading = 'eager';
     imageContainer.appendChild(image);
-    detail.appendChild(imageContainer);
   }
+
+  // Create hero container and append image and header
+  const hero = document.createElement('div');
+  hero.className = 'adventure-hero';
+  if (imageContainer) hero.appendChild(imageContainer);
+  hero.appendChild(header);
+  detail.appendChild(hero);
 
   const price = document.createElement('div');
   price.className = 'detail-item';
