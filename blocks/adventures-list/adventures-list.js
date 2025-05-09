@@ -1,37 +1,18 @@
 // eslint-disable-next-line no-console -- Debugging Universal Editor context
 console.log('[adventures-list] window.location.href:', window.location.href);
 
-const AEM_PUBLISH_URL = 'https://publish-p82652-e710588.adobeaemcloud.com';
-const AEM_AUTHOR_URL = 'https://author-p82652-e710588.adobeaemcloud.com';
-
-function isAuthor() {
-  // eslint-disable-next-line no-console -- Debugging author domain check
-  console.log('[adventures-list] isAuthor check:', window.location.hostname);
-  return window.location.hostname.includes('author-') && window.location.hostname.includes('adobeaemcloud.com');
-}
+import {
+  isAuthor,
+  AEM_PUBLISH_URL,
+  AEM_AUTHOR_URL,
+  createErrorState,
+} from '../../utils/aem-content.js';
 
 function getGraphqlUrl() {
   const url = isAuthor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
   // eslint-disable-next-line no-console -- Debugging GraphQL endpoint selection
   console.log('[adventures-list] Using GraphQL endpoint:', url);
   return url;
-}
-
-function createErrorState(message) {
-  const errorContainer = document.createElement('div');
-  errorContainer.className = 'adventures-error';
-
-  const icon = document.createElement('div');
-  icon.className = 'adventures-error-icon';
-  icon.innerHTML = '⚠️';
-
-  const text = document.createElement('div');
-  text.className = 'adventures-error-text';
-  text.innerHTML = `<h3>Unable to Load Adventures</h3><p>${message}</p>`;
-
-  errorContainer.appendChild(icon);
-  errorContainer.appendChild(text);
-  return errorContainer;
 }
 
 async function fetchAdventures() {
