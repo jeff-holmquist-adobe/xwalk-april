@@ -41,4 +41,4 @@ export function createErrorState(message) {
   errorContainer.appendChild(icon);
   errorContainer.appendChild(text);
   return errorContainer;
-} 
+}

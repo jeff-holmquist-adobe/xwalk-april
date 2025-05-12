@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-console -- Debugging Universal Editor context
-console.log('[adventures-list] window.location.href:', window.location.href);
-
 import {
   isAuthor,
   AEM_PUBLISH_URL,
@@ -10,8 +7,6 @@ import {
 
 function getGraphqlUrl() {
   const url = isAuthor() ? AEM_AUTHOR_URL : AEM_PUBLISH_URL;
-  // eslint-disable-next-line no-console -- Debugging GraphQL endpoint selection
-  console.log('[adventures-list] Using GraphQL endpoint:', url);
   return url;
 }
 

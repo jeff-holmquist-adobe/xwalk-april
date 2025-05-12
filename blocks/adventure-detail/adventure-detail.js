@@ -126,6 +126,9 @@ export default async function decorate(block) {
       throw new Error('Invalid adventure URL');
     }
     const adventure = await fetchAdventureBySlug(slug);
+    if (adventure && adventure.title) {
+      document.title = adventure.title;
+    }
     const detail = createAdventureDetail(adventure);
     if (detail) {
       block.textContent = '';
