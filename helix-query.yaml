@@ -16,8 +16,8 @@ indices:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
       title:
-        select: frontmatter > title, head > title, main h1
-        value: text(el)
+        select: head > title, main h1
+        value: textContent(el)
 
 routes:
   - path: /adventures/*
