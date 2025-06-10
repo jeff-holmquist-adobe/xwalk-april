@@ -5,6 +5,7 @@ indices:
     include:
       - '/'
       - '/adventures/*'
+      - '/blog/*'
     exclude:
       - '/**.json'
       - '/footer'
