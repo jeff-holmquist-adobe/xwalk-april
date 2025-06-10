@@ -3,24 +3,12 @@ version: 1
 indices:
   pages:
     include:
-      - '/'
-      - '/adventures/*'
-      - '/blog/*'
+      - '/**'
     exclude:
       - '/**.json'
-      - '/footer'
-      - '/nav'
-      - '/index/**'
-      - '/adventures/adventure'
-      - '/adventures/adventure.html'
-      - '/adventures/adventure.md'
-      - '/sitemap.xml'
-      - '/404.html'
+      - '/drafts/**'
     target: /query-index.json
     properties:
-      title:
-        select: head > title
-        value: text(el)
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
