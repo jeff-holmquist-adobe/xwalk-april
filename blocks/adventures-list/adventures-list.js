@@ -55,9 +55,7 @@ function createAdventureCard(adventure) {
   }
 
   const link = document.createElement('a');
-  const pathParts = adventure._path.split('/adventures/')[1].split('/');
-  const slug = pathParts[0];
-  link.href = getAdventureDetailUrl(slug);
+  link.href = getAdventureDetailUrl(adventure.slug);
   link.className = 'adventure-card-link';
 
   const card = document.createElement('div');
